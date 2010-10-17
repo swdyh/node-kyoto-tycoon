@@ -1,0 +1,7 @@
+{
+  "name": "kyoto-tycoon",
+  "version": "0.0.3",
+  "author": "swdyh",
+  "directories" : { "lib" : "./lib" },
+  "main" : "./lib/kyoto-tycoon"
+}
