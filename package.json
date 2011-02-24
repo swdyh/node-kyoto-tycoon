@@ -1,8 +1,8 @@
 {
   "name": "kyoto-tycoon",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "swdyh",
-  "directories" : { "lib" : "./lib" },
+  "directories": { "lib": "./lib" },
   "bin": { "kt-cli": "./bin/kt-cli.js" },
-  "main" : "./lib/kyoto-tycoon"
+  "main": "./lib/kyoto-tycoon"
 }
