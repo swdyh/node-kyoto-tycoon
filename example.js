@@ -24,6 +24,10 @@ kt3.set('key3', 'val3').next(function() {
     return kt3.get('key3')
 }).next(function(err, data) {
     console.log(data)
-}).next(function() {
+    return kt3.remove('key3')
+}).next(function(err, data) {
+    return kt3.get('key3')
+}).next(function(err, data) {
+    console.log(err)
     kt3.end()
 })
