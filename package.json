@@ -3,5 +3,6 @@
   "version": "0.0.3",
   "author": "swdyh",
   "directories" : { "lib" : "./lib" },
+  "bin": { "kt-cli": "./bin/kt-cli.js" },
   "main" : "./lib/kyoto-tycoon"
 }
