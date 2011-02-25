@@ -28,8 +28,8 @@ vows.describe('KyotoTycoon').addBatch({
         },
         'return report': function(err, data) {
             assert.isNull(err)
-            assert.isString(data.version)
-            assert.isString(data.kc_version)
+            assert.isString(data.conf_kt_version)
+            assert.isString(data.conf_kc_version)
         }
     },
     'status': {
