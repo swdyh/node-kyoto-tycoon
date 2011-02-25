@@ -5,7 +5,11 @@ var KyotoTycoon = require('kyoto-tycoon').KyotoTycoon
 
 var commands = [
     'report', 'status', 'clear', 'set', 'add', 'replace', 'append',
-    'remove', 'get', 'matchPrefix', 'matchRegex'
+    'remove', 'get', 'matchPrefix', 'matchRegex',
+    'cur_jump', 'cur_jump_back', 'cur_step',
+    'cur_step_back', 'cur_set_value', 'cur_get',
+    'cur_get_key', 'cur_get_value', 'cur_remove',
+    'cur_delete'
 ]
 var cli_commands = ['help', 'keys', 'all']
 var kt = new KyotoTycoon()
@@ -16,44 +20,51 @@ rli.on('SIGINT', function() {
     rli.close()
     process.exit()
 })
+var cb = function(err, data) {
+    if (err) {
+        console.log('error: ' + err.message.replace(/\n$/, ''))
+    }
+    else if (JSON.stringify(data) != '{}') {
+        console.log(data)
+    }
+    rli.prompt()
+}
 rli.addListener('line', function(cmd) {
     var tmp = cmd.replace(/^[ ]+|[ ]+$/g, '').split(/\s+/)
     var cmd = tmp.shift()
-    if (cmd == 'keys') {
-        cmd = 'matchPrefix'
-        tmp = ['']
-    }
-
     if (commands.indexOf(cmd) >= 0) {
-        tmp.push(function(err, data) {
-            if (err) {
-                console.log('error: ' + err.message.replace(/\n$/, ''))
-            }
-            else if (JSON.stringify(data) != '{}') {
-                console.log(data)
-            }
+        tmp.push(cb)
+        try {
+            kt[cmd].apply(kt, tmp)
+        }
+        catch(e) {
+            console.log(e)
             rli.prompt()
+        }
+    }
+    else if (cmd == 'keys') {
+        kt.matchPrefix('', cb)
+    }
+    else if (cmd == 'all') {
+        kt.matchPrefix('', function(err, val) {
+            kt.get_bulk(val, cb)
         })
-        kt[cmd].apply(kt, tmp)
+    }
+    else if (cmd == 'help') {
+        console.log('commands:')
+        console.log(JSON.stringify(commands.concat(cli_commands)))
+        console.log('example:')
+        console.log(' kt> set foo 100')
+        console.log(' kt> get foo')
+        console.log(' kt> cur_jump 1 foo')
+        console.log(' kt> cur_get 1 ')
+        rli.prompt()
+    }
+    else if (cmd != '') {
+        console.log('error')
+        rli.prompt()
     }
     else {
-        if (cmd == 'help') {
-            console.log('commands:')
-            console.log(JSON.stringify(commands.concat(cli_commands)))
-            console.log('example:')
-            console.log(' kt> set foo 100')
-            console.log(' kt> get foo')
-        }
-        else if (cmd == 'all') {
-            kt.matchPrefix('', function(err, val) {
-                kt.get_bulk(val, function(err, val) {
-                    console.log(val)
-                })
-            })
-        }
-        else if (cmd != '') {
-            console.log('error')
-        }
         rli.prompt()
     }
 })
