@@ -23,16 +23,6 @@ source
         })
     })
     
-    // Do not use Keep-Alive connection
-    var kt2 = new KyotoTycoon({ keepalive : false })
-    kt2.set('key2', 'val2', function(err, data) {
-        kt2.get('key2', function(err, data) {
-            console.log(data)
-            // unnecessary
-            // kt2.end()
-        })
-    })
-    
     // use JSDeferred
     var kt3 = new KyotoTycoon({ deferred : true })
     kt3.set('key3', 'val3').next(function() {
@@ -43,6 +33,26 @@ source
         kt3.end()
     })
     
+
+# Utils
+
+    $ kt-cli
+    kt> set a 1
+    kt> set b 2
+    kt> get a
+    1
+    kt> get b
+    2
+    kt> cur_jump 1 a
+    kt> cur_get 1
+    { key: 'a', value: '1' }
+    kt> cur_step 1
+    kt> cur_get 1
+    { key: 'b', value: '2' }
+    kt> all
+    { a: '1', b: '2' }
+    kt> keys
+    [ 'a', 'b' ]
 
 # Copyright
 
