@@ -211,7 +211,7 @@ vows.describe('KyotoTycoon').addBatch({
         },
         '': {
             topic: function() {
-                kt.cur_jump({ CUR: 10, key: 'cur' }, this.callback)
+                kt.cur_jump(10, { key: 'cur' }, this.callback)
             },
             ' ': {
                 topic: function() {
