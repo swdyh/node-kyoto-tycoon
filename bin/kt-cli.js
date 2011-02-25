@@ -12,7 +12,24 @@ var commands = [
     'set_db'
 ]
 var cli_commands = ['help', 'keys', 'all']
-var kt = new KyotoTycoon()
+var kt_opt = {}
+if (process.argv.length > 2) {
+    [process.argv[2], process.argv[3]].forEach(function(i) {
+        if (i) {
+            if (i.match(/^-?-h(elp)?/)) {
+                console.log('kt-cli [host] [port]')
+                process.exit()
+            }
+            if (i.match(/^\d+$/)) {
+                kt_opt.port = parseInt(i, 10)
+            }
+            else {
+                kt_opt.host = i
+            }
+        }
+    })
+}
+var kt = new KyotoTycoon(kt_opt)
 var rli = rl.createInterface(process.stdin, process.stdout)
 rli.setPrompt('kt> ')
 rli.prompt()
