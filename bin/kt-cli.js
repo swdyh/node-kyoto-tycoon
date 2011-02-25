@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var rl = require('readline')
+var qs = require('querystring')
 var KyotoTycoon = require('kyoto-tycoon').KyotoTycoon
 
 var commands = [
@@ -50,6 +51,20 @@ rli.addListener('line', function(cmd) {
     var tmp = cmd.replace(/^[ ]+|[ ]+$/g, '').split(/\s+/)
     var cmd = tmp.shift()
     if (commands.indexOf(cmd) >= 0) {
+        var opt = {}
+        if (tmp.length > 0) {
+            var last = tmp[tmp.length - 1]
+            try {
+                var o = qs.parse(last)
+                if (o[last] != '') {
+                    opt = o
+                    tmp.splice(tmp.length - 1, 1)
+                }
+            }
+            catch(e) {
+            }
+        }
+        tmp.push(opt)
         tmp.push(cb)
         try {
             kt[cmd].apply(kt, tmp)
@@ -73,7 +88,7 @@ rli.addListener('line', function(cmd) {
         console.log('example:')
         console.log(' kt> set foo 100')
         console.log(' kt> get foo')
-        console.log(' kt> cur_jump 1 foo')
+        console.log(' kt> cur_jump 1')
         console.log(' kt> cur_get 1 ')
         rli.prompt()
     }
