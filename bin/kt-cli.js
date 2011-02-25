@@ -8,8 +8,8 @@ var commands = [
     'remove', 'get', 'matchPrefix', 'matchRegex',
     'cur_jump', 'cur_jump_back', 'cur_step',
     'cur_step_back', 'cur_set_value', 'cur_get',
-    'cur_get_key', 'cur_get_value', 'cur_remove',
-    'cur_delete'
+    'cur_get_key', 'cur_get_value', 'cur_remove', 'cur_delete',
+    'set_db'
 ]
 var cli_commands = ['help', 'keys', 'all']
 var kt = new KyotoTycoon()
