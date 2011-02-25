@@ -43,7 +43,7 @@ source
     1
     kt> get b
     2
-    kt> cur_jump 1 a
+    kt> cur_jump 1 key=a
     kt> cur_get 1
     { key: 'a', value: '1' }
     kt> cur_step 1
